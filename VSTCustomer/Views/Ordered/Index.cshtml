@@ -1,0 +1,158 @@
+﻿@model IEnumerable<VSTCustomer.Models.ORDERED>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách ORDERED</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f6fb; /* nền xanh dương nhạt */
+            margin: 20px;
+        }
+
+        h1 {
+            color: #2a4d7c;
+            margin-bottom: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: auto; /* bảng co giãn theo nội dung */
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 6px;
+            overflow: hidden;
+            table-layout: auto;
+            margin-left: 0; /* sát bên trái */
+        }
+
+        th, td {
+            padding: 10px 12px;
+            text-align: left;
+            font-size: 14px;
+            word-wrap: break-word;
+        }
+
+        th {
+            background-color: #4a90e2; /* xanh dương đậm */
+            color: white;
+            text-transform: uppercase;
+            font-size: 13px;
+            letter-spacing: 0.05em;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f7fc; /* xanh dương rất nhạt */
+        }
+
+        tr:hover {
+            background-color: #d9ecff; /* hiệu ứng hover */
+        }
+
+        td {
+            color: #333;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Danh sách ORDERED</h1>
+    <div class="toolbar">
+        
+        <div class="search">
+            <label for="startDate">Từ ngày:</label>
+            <input type="date" id="startDate" name="startDate">
+
+            <label for="endDate">Đến ngày:</label>
+            <input type="date" id="endDate" name="endDate">
+
+            <label for="id">Mã ID:</label>
+            <input type="text" id="id" name="id">
+
+            <label for="status">Status:</label>
+            <select id="status" name="status">
+                <option value="">--Chọn--</option>
+                <option value="Pending">Pending</option>
+                <option value="Approved">Approved</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+            
+            <button type="submit">Tìm kiếm</button>
+            <div class="buttons">
+                <button class="btn-add">Thêm</button>
+                <button class="btn-edit">Sửa</button>
+                <button class="btn-delete">Xóa</button>
+            </div>
+        </div>
+    </div>
+
+
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>ID</th>
+                <th>BASE_PRICE</th>
+                <th>BIDD_PRICE</th>
+                <th>CONTRACT_NO</th>
+                <th>CREATE_AT</th>
+                <th>CUSTOMER_ID</th>
+                <th>DELIVERY_TIME</th>
+                <th>EFFECT_PRICE</th>
+                <th>EMP_ID</th>
+                <th>END_USER</th>
+                <th>ORDED_DATE</th>
+                <th>ORDER_CR_HR</th>
+                <th>ORD_EDGE</th>
+                <th>ORD_STAT</th>
+                <th>ORD_THK</th>
+                <th>ORD_USAGE</th>
+                <th>ORD_WGT</th>
+                <th>ORD_WTH</th>
+                <th>QUANTITY</th>
+                <th>REMARK</th>
+                <th>STS_ST_CLS</th>
+                <th>STS_ST_SER</th>
+                <th>SURFACE_CD</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var o in Model)
+            {
+                <tr>
+                    <td><input type="checkbox" /></td>
+                    <td>@o.ID</td>
+                    <td>@o.BASE_PRICE</td>
+                    <td>@o.BIDD_PRICE</td>
+                    <td>@o.CONTRACT_NO</td>
+                    <td>@o.CREATE_AT</td>
+                    <td>@o.CUSTOMER_ID</td>
+                    <td>@o.DELIVERY_TIME</td>
+                    <td>@o.EFFECT_PRICE</td>
+                    <td>@o.EMP_ID</td>
+                    <td>@o.END_USER</td>
+                    <td>@o.ORDED_DATE</td>
+                    <td>@o.ORDER_CR_HR</td>
+                    <td>@o.ORD_EDGE</td>
+                    <td>@o.ORD_STAT</td>
+                    <td>@o.ORD_THK</td>
+                    <td>@o.ORD_USAGE</td>
+                    <td>@o.ORD_WGT</td>
+                    <td>@o.ORD_WTH</td>
+                    <td>@o.QUANTITY</td>
+                    <td>@o.REMARK</td>
+                    <td>@o.STS_ST_CLS</td>
+                    <td>@o.STS_ST_SER</td>
+                    <td>@o.SURFACE_CD</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
