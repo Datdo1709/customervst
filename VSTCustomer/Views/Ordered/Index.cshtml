@@ -1,0 +1,215 @@
+﻿@model VSTCustomer.ViewModels.OrderVM
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách ORDERED</title>
+   <link rel="stylesheet" href="~/css/ordered.css" />
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script src="~/js/ordered.js"></script>
+
+</head>
+<body>
+    <h1>Danh sách ORDERED</h1>
+    <div class="toolbar">
+        <div class="search">
+            <label for="startDate">Từ ngày:</label>
+            <input type="date" id="startDate" name="startDate">
+
+            <label for="endDate">Đến ngày:</label>
+            <input type="date" id="endDate" name="endDate">
+
+            <label for="id">Mã ID:</label>
+            <input type="text" id="id" name="id">
+
+            <label for="status">Status:</label>
+            <select id="status" name="status">
+                <option value="">--Chọn--</option>
+                <option value="Pending">Pending</option>
+                <option value="Approved">Approved</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+            
+            <button type="submit">Tìm kiếm</button>
+            <div class="buttons">
+                <button class="btn-add">Thêm</button>
+                <button class="btn-edit">Sửa</button>
+                <button class="btn-delete">Xóa</button>
+            </div>
+            <div id="orderForm" style="display:none; margin-top:20px;">
+            <h3 id="formTitle">Thêm Order</h3>
+            <form id="addForm" method="post" action="/Order/Add">
+                <label>BASE_PRICE:</label>
+                <input type="text" name="BASE_PRICE" /><br/>
+
+                <label>BIDD_PRICE:</label>
+                <input type="text" name="BIDD_PRICE" /><br/>
+
+                <label>CONTRACT_NO:</label>
+                <input type="text" name="CONTRACT_NO" /><br/>
+
+                <!-- thêm các field khác giống bảng Index -->
+
+                <button type="submit">Lưu</button>
+                <button type="button" id="btnCloseForm">Đóng</button>
+            </form>
+            </div>
+
+        </div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>ID</th>
+                <th>BASE_PRICE</th>
+                <th>BIDD_PRICE</th>
+                <th>CONTRACT_NO</th>
+                <th>CREATE_AT</th>
+                <th>CUSTOMER_ID</th>
+                <th>DELIVERY_TIME</th>
+                <th>EFFECT_PRICE</th>
+                <th>EMP_ID</th>
+                <th>END_USER</th>
+                <th>ORDED_DATE</th>
+                <th>ORDER_CR_HR</th>
+                <th>ORD_EDGE</th>
+                <th>ORD_STAT</th>
+                <th>ORD_THK</th>
+                <th>ORD_USAGE</th>
+                <th>ORD_WGT</th>
+                <th>ORD_WTH</th>
+                <th>QUANTITY</th>
+                <th>REMARK</th>
+                <th>STS_ST_CLS</th>
+                <th>STS_ST_SER</th>
+                <th>SURFACE_CD</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var o in Model.Orders)
+            {
+                <tr>
+                    <td><input type="checkbox" name="selectedRow" value="@o.ID" onclick="selectOnlyThis(this)" /></td>
+                    <td>@o.ID</td>
+                    <td>@o.BASE_PRICE</td>
+                    <td>@o.BIDD_PRICE</td>
+                    <td>@o.CONTRACT_NO</td>
+                    <td>@o.CREATE_AT</td>
+                    <td>@o.CUSTOMER_ID</td>
+                    <td>@o.DELIVERY_TIME</td>
+                    <td>@o.EFFECT_PRICE</td>
+                    <td>@o.EMP_ID</td>
+                    <td>@o.END_USER</td>
+                    <td>@o.ORDED_DATE</td>
+                    <td>@o.ORDER_CR_HR</td>
+                    <td>@o.ORD_EDGE</td>
+                    <td>@o.ORD_STAT</td>
+                    <td>@o.ORD_THK</td>
+                    <td>@o.ORD_USAGE</td>
+                    <td>@o.ORD_WGT</td>
+                    <td>@o.ORD_WTH</td>
+                    <td>@o.QUANTITY</td>
+                    <td>@o.REMARK</td>
+                    <td>@o.STS_ST_CLS</td>
+                    <td>@o.STS_ST_SER</td>
+                    <td>@o.SURFACE_CD</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+@*     <div id="orderForm" style="display:none; margin-top:20px;">
+    <h3 id="formTitle">Thêm Order</h3>
+    <form method="post" action="/Order/Save">
+        <!-- Hidden ID để phục vụ Edit -->
+        <input type="hidden" id="orderId" name="ID" />
+
+        <label for="basePrice">BASE_PRICE:</label>
+        <input type="text" id="basePrice" name="BASE_PRICE" /><br/>
+
+        <label for="biddPrice">BIDD_PRICE:</label>
+        <input type="text" id="biddPrice" name="BIDD_PRICE" /><br/>
+
+        <label for="contractNo">CONTRACT_NO:</label>
+        <input type="text" id="contractNo" name="CONTRACT_NO" /><br/>
+
+        <label for="createAt">CREATE_AT:</label>
+        <input type="date" id="createAt" name="CREATE_AT" /><br/>
+
+        <label for="customerId">CUSTOMER_ID:</label>
+        <input type="text" id="customerId" name="CUSTOMER_ID" /><br/>
+
+        <label for="deliveryTime">DELIVERY_TIME:</label>
+        <input type="text" id="deliveryTime" name="DELIVERY_TIME" /><br/>
+
+        <label for="effectPrice">EFFECT_PRICE:</label>
+        <input type="text" id="effectPrice" name="EFFECT_PRICE" /><br/>
+
+        <label for="empId">EMP_ID:</label>
+        <input type="text" id="empId" name="EMP_ID" /><br/>
+
+        <label for="endUser">END_USER:</label>
+        <input type="text" id="endUser" name="END_USER" /><br/>
+
+        <label for="ordedDate">ORDED_DATE:</label>
+        <input type="date" id="ordedDate" name="ORDED_DATE" /><br/>
+
+        <label for="orderCrHr">ORDER_CR_HR:</label>
+        <input type="text" id="orderCrHr" name="ORDER_CR_HR" /><br/>
+
+        <label for="ordEdge">ORD_EDGE:</label>
+        <input type="text" id="ordEdge" name="ORD_EDGE" /><br/>
+
+        <label for="ordStat">ORD_STAT:</label>
+        <input type="text" id="ordStat" name="ORD_STAT" /><br/>
+
+        <label for="ordThk">ORD_THK:</label>
+        <input type="text" id="ordThk" name="ORD_THK" /><br/>
+
+        <label for="ordUsage">ORD_USAGE:</label>
+        <input type="text" id="ordUsage" name="ORD_USAGE" /><br/>
+
+        <label for="ordWgt">ORD_WGT:</label>
+        <input type="text" id="ordWgt" name="ORD_WGT" /><br/>
+
+        <label for="ordWth">ORD_WTH:</label>
+        <input type="text" id="ordWth" name="ORD_WTH" /><br/>
+
+        <label for="quantity">QUANTITY:</label>
+        <input type="number" id="quantity" name="QUANTITY" /><br/>
+
+        <label for="remark">REMARK:</label>
+        <input type="text" id="remark" name="REMARK" /><br/>
+
+        <label for="stsStCls">STS_ST_CLS:</label>
+        <input type="text" id="stsStCls" name="STS_ST_CLS" /><br/>
+
+        <label for="stsStSer">STS_ST_SER:</label>
+        <input type="text" id="stsStSer" name="STS_ST_SER" /><br/>
+
+        <label for="surfaceCd">SURFACE_CD:</label>
+        <input type="text" id="surfaceCd" name="SURFACE_CD" /><br/>
+
+        <button type="submit">Lưu</button>
+        <button type="button" onclick="closeForm()">Hủy</button>
+     </form>
+     </div> *@
+    @{
+    Func<int?, string> generateUrl = p => Url.Action(
+        "Index", 
+        "Ordered", 
+        new { pageIndex = p, pageSize = Model.Pagination.PageSize }
+        );
+    }
+<partial name="_Pagination" model="new { 
+    currentPage = Model.Pagination.CurrentPage,
+    countPages  = Model.Pagination.TotalPages,
+    generateUrl = generateUrl
+}" />
+</body>
+</html>

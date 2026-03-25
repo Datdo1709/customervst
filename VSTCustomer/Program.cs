@@ -7,8 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<MyDbContext>(options =>
-    options.UseOracle(builder.Configuration.GetConnectionString("OracleDb")));
+//builder.Services.AddDbContext<MyDbContext>(options =>
+//    options.UseOracle(builder.Configuration.GetConnectionString("OracleDb")));
+builder.Services.AddDbContext<MyDbContext>(options => 
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServer")));
+
 
 
 var app = builder.Build();
